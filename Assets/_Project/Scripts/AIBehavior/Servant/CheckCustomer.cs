@@ -6,6 +6,7 @@ public class CheckCustomer : Conditional
 {
 	[SerializeField] SharedGameObject tableHolder;
     [SerializeField] SharedTransform tablePos;
+    [SerializeField] SharedTransform customer;
 
     public override void OnStart()
     {
@@ -18,16 +19,21 @@ public class CheckCustomer : Conditional
 
     TaskStatus GetOrderTablePos()
     {
-		foreach(Transform tr in tableHolder.Value.transform)
+        if (customer.Value != null) return TaskStatus.Success;
+        if (tableHolder.Value)
         {
-            if (tr.GetComponent<TableController>().customer != null && tr.GetComponent<TableController>().customer.CheckOrderCustomer())
+		    foreach(Transform tr in tableHolder.Value.transform)
             {
-                if (!tr.GetComponent<TableController>().hadServantOrder)
+                if (tr.GetComponent<TableController>().customer != null && tr.GetComponent<TableController>().customer.CheckOrderCustomer())
                 {
-                    tablePos.Value = tr;
-                    tablePos.Value.GetComponent<TableController>().SetUpServantServantOrder(true);
+                    if (!tr.GetComponent<TableController>().hadServantOrder)
+                    {
+                        customer.Value = tr.GetComponent<TableController>().customer.transform;
+                        tablePos.Value = tr;
+                        tablePos.Value.GetComponent<TableController>().SetUpServantServantOrder(true);
+                        return TaskStatus.Success;
+                    }
                 }
-                return TaskStatus.Success;
             }
         }
         return TaskStatus.Failure;

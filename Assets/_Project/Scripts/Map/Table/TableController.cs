@@ -25,4 +25,13 @@ public class TableController : MonoBehaviour
     {
         hadServantOrder = isServantOrder;
     }
+
+    public void ResetTable()
+    {
+        reserveSit = false;
+        onSit = false;
+        hadServantOrder = false;
+
+        customer = null;
+    }
 }

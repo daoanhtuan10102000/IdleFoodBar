@@ -11,6 +11,6 @@ public class SleepServant : Action
 
 	public override TaskStatus OnUpdate()
 	{
-		return TaskStatus.Success;
+		return TaskStatus.Running;
 	}
 }

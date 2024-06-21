@@ -4,13 +4,13 @@ using BehaviorDesigner.Runtime.Tasks;
 
 public class ResetServant : Action
 {
-	public override void OnStart()
-	{
-		
-	}
+	[SerializeField] SharedTransform tablePos;
+	[SerializeField] SharedTransform customer;
 
 	public override TaskStatus OnUpdate()
 	{
-		return TaskStatus.Success;
+		tablePos.Value = null;
+		customer.Value = null;
+		return TaskStatus.Failure;
 	}
 }

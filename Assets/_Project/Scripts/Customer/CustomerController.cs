@@ -8,6 +8,7 @@ public class CustomerController : MonoBehaviour
 {
     [ReadOnly, SerializeField] BehaviorTree behaviorTree;
     [ReadOnly] public SharedBool isOrdered;
+    [ReadOnly] public SharedBool beenReceivedOrder;
     [ReadOnly] public SharedBool orderDone;
     public SharedBool IsOrdered
     {
@@ -18,6 +19,7 @@ public class CustomerController : MonoBehaviour
         }
         set
         {
+            isOrdered = value;
             behaviorTree.SetVariable("IsOrdered", value);
         }
     }
@@ -25,12 +27,27 @@ public class CustomerController : MonoBehaviour
     {
         get
         {
-            isOrdered = behaviorTree.GetVariable("OrderDone") as SharedBool;
-            return isOrdered;
+            orderDone = behaviorTree.GetVariable("OrderDone") as SharedBool;
+            return orderDone;
         }
         set
         {
+            orderDone = value;
             behaviorTree.SetVariable("OrderDone", value);
+        }
+    }
+
+    public SharedBool BeenReceivedOrder
+    {
+        get
+        {
+            beenReceivedOrder = behaviorTree.GetVariable("BeenReceivedOrder") as SharedBool;
+            return beenReceivedOrder;
+        }
+        set
+        {
+            beenReceivedOrder = value;
+            behaviorTree.SetVariable("BeenReceivedOrder", value);
         }
     }
 
@@ -51,5 +68,10 @@ public class CustomerController : MonoBehaviour
     public bool CheckOrderCustomer()
     {
         return IsOrdered.Value && !OrderDone.Value;
+    }
+
+    public void DestroyCustom()
+    {
+        Destroy(gameObject);
     }
 }

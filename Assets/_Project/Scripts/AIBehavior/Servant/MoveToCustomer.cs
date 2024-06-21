@@ -5,7 +5,9 @@ using BehaviorDesigner.Runtime.Tasks;
 public class MoveToCustomer : Action
 {
 	[SerializeField] SharedTransform tablePos;
+	[SerializeField] SharedTransform customer;
 	[SerializeField] SharedFloat speedServant;
+	[SerializeField] SharedBool dealDone;
 	private Vector3 _targetPosition;
 
 	public override void OnStart()
@@ -23,6 +25,10 @@ public class MoveToCustomer : Action
 		else
 		{
 			transform.position = _targetPosition;
+			if (dealDone.Value)
+				customer.Value.GetComponent<CustomerController>().OrderDone.Value = true;
+			else
+				customer.Value.GetComponent<CustomerController>().BeenReceivedOrder = true;
 			return TaskStatus.Success;
 		}
 	}

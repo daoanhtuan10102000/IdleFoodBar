@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class SpawnerBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject customerObject;
+    [SerializeField] float minSpawnTime;
+    [SerializeField] float maxSpawnTime;
+
+    float spawnTime;
+    float timer;
+
+
+    private void Start()
     {
-        
+        spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+        timer = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (timer < spawnTime) timer += Time.deltaTime;
+        else
+        {
+            timer = 0;
+            spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+            SpawnCustomerController();
+        }
+    }
+
+    void SpawnCustomerController()
+    {
+        Instantiate(customerObject, transform);
     }
 }

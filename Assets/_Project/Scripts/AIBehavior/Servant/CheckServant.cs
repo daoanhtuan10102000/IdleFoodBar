@@ -10,6 +10,7 @@ public class CheckServant : Conditional
 	{
 		if (isHadOrder.Value)
 			return TaskStatus.Failure;
-		else return TaskStatus.Success;
+        else
+			return TaskStatus.Success;
 	}
 }
